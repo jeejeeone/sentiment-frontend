@@ -10,6 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import axios from 'axios';
 import BarChart from "./BarChart";
 import './index.scss';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const timeFilterValues = ['24 hours', '7 days', '30 days', '100 days'];
 
@@ -18,11 +19,16 @@ const App = () => {
     const [showFilters, setShowFilters] = React.useState(false);
     const [filtersLabel, setFiltersLabel] = React.useState("Show Filters");
     const [mentions, setMentions] = React.useState([])
+    const [fetching, setFetching] = React.useState(true)
 
     useEffect(() => {
+        if (!fetching)
+            setFetching(true);
+
         axios.get(`/api/ui/mentions/last/` + timeFilter).then(
             res => {
                 setMentions(res.data.mentions)
+                setFetching(false)
             }
         )
     }, [timeFilter]);
@@ -34,7 +40,7 @@ const App = () => {
     }
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" className="mentionsChart">
             <h1>WSB Mentions</h1>
                 <Grid container spacing={3}>
                     <Grid item xs={2}>
@@ -52,10 +58,11 @@ const App = () => {
                         />
                     </Grid>
                     <Grid item xs={7}/>
-                    <Grid item xs={3} container justify="flexend">
+                    <Grid item xs={3}>
                         <Button
                             endIcon={<FilterListIcon>{filtersLabel}</FilterListIcon>}
                             onClick={toggleShowFilter}
+                            className="showFilters"
                         >{filtersLabel}</Button>
                     </Grid>
                 </Grid>
@@ -86,7 +93,10 @@ const App = () => {
             }
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <BarChart tickers={mentions}/>
+                    { fetching ?
+                        <div className="spinnerWrapper"><CircularProgress className="loadingSpinner" /></div> :
+                        <BarChart tickers={mentions}/>
+                    }
                 </Grid>
             </Grid>
         </Container>

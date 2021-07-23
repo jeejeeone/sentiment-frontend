@@ -10,8 +10,13 @@ code {
     monospace;
 }
 
-.barItem {
+.mentionsChart {
+  .showFilters {
+    float: right;
+  }
+}
 
+.barItem {
   height: 21px;
   transition: fill .3s ease;
   cursor: pointer;
@@ -34,3 +39,11 @@ code {
   }
 }
 
+.spinnerWrapper {
+  text-align: center;
+
+  .loadingSpinner {
+    margin: 0 auto;
+    display: block;
+  }
+}
