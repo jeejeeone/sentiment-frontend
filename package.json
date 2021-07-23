@@ -8,6 +8,8 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@nivo/bar": "^0.71.0",
     "@nivo/core": "^0.71.0",
+    "axios": "^0.21.1",
+    "node-sass": "^6.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "4.0.3",
@@ -36,5 +38,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:8090"
 }

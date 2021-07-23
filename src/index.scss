@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.barItem {
+
+  height: 21px;
+  transition: fill .3s ease;
+  cursor: pointer;
+
+  .bar {
+    fill: rgb(231, 193, 160);
+  }
+
+  .ticker {
+    fill: rgb(107, 124, 137);
+  }
+
+  .count {
+    fill: #3a3a3a
+  }
+
+  line {
+    stroke: rgb(107, 124, 137);
+    stroke-width: 1;
+  }
+}
+
