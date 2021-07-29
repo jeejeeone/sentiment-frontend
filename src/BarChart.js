@@ -36,7 +36,8 @@ const Bar = (props) => {
                     width={barWidth}
                     height={barConfig.height}
                     y={barY}
-                    x={barXWithPadding}/>
+                    x={barXWithPadding}>
+                </rect>
                 <text className="count" y={countY} x={countX} dy=".35em">{props.count}</text>
             </g>
         </g>
@@ -48,7 +49,7 @@ const BarChart = (props) => {
     const maxCount = Math.max(...props.tickers.map(item => item.count));
 
     return (
-        <div>
+        <div className="barChartWrapper">
             <svg width="100%" height={props.tickers.length * (barConfig.height + barConfig.padding)}>
                 {
                     props.tickers.map((item,index) => {
