@@ -6,8 +6,8 @@ import {
     Route
 } from "react-router-dom";
 import './index.scss';
-import MentionsView from "./MentionsView";
-import TickerView from "./TickerView";
+import MentionsView from "./mentions/MentionsView";
+import TickerView from "./ticker/TickerView";
 
 const App = () => {
     return (
@@ -16,7 +16,7 @@ const App = () => {
                 <Route exact path="/">
                     <MentionsView />
                 </Route>
-                <Route path="/mentions/:ticker" children={<TickerView />} />
+                <Route path="/ticker/:ticker" children={<TickerView />} />
             </Switch>
         </Router>
     )

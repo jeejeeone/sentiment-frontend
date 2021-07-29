@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios';
 import BarChart from "./BarChart";
-import './index.scss';
+import '../index.scss';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const timeFilterValues = ['24 hours', '7 days', '30 days', '100 days'];
