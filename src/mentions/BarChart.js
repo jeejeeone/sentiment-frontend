@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 const barConfig = {
     height: 25,
     padding: 3,
@@ -28,7 +30,7 @@ const Bar = (props) => {
 
     return (
         <g className="barItem">
-            <text className="ticker" y={textY} dy=".35em">{props.text}</text>
+            <text className="ticker" y={textY} dy=".35em" onClick={() => props.onClick(props.text)}>{props.text}</text>
             <line x1={barXWithPadding - barConfig.markerLength} y1={markerY} x2={barXWithPadding} y2={markerY}></line>
             <g>
                 <rect
@@ -36,8 +38,9 @@ const Bar = (props) => {
                     width={barWidth}
                     height={barConfig.height}
                     y={barY}
-                    x={barXWithPadding}>
-                </rect>
+                    x={barXWithPadding}
+                    onClick={() => props.onClick(props.text)}
+                />
                 <text className="count" y={countY} x={countX} dy=".35em">{props.count}</text>
             </g>
         </g>
@@ -47,6 +50,12 @@ const Bar = (props) => {
 const BarChart = (props) => {
     const maxTickerCharacters = Math.max(...props.tickers.map(item => item.ticker.length));
     const maxCount = Math.max(...props.tickers.map(item => item.count));
+
+    const history = useHistory();
+
+    const goToTicker = (ticker) => {
+        history.push("/ticker/" + ticker);
+    }
 
     return (
         <div className="barChartWrapper">
@@ -62,6 +71,7 @@ const BarChart = (props) => {
                             count={item.count}
                             index={index}
                             maxTickerCharacters={maxTickerCharacters}
+                            onClick={goToTicker}
                         />
                     })
                 }

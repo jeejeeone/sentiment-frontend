@@ -9,19 +9,20 @@ import axios from 'axios';
 import BarChart from "./BarChart";
 import '../index.scss';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { atom, useRecoilState } from 'recoil';
+import { persistAtom } from "../common/persist";
 
 const timeFilterValues = ['24 hours', '7 days', '30 days', '100 days'];
 
 const MentionsView = () => {
-    const [timeFilter, setTimeFilter] = React.useState(timeFilterValues[0]);
-    const [showFilters, setShowFilters] = React.useState(false);
-    const [filtersLabel, setFiltersLabel] = React.useState("Show Filters");
+    const [timeFilter, setTimeFilter] = useRecoilState(timeFilterState)
+    const [showFilters, setShowFilters] = useRecoilState(showFiltersState)
     const [mentionsView, setMentionsView] = React.useState([])
     const [mentions, setMentions] = React.useState([])
     const [fetching, setFetching] = React.useState(false)
-    const [tickerFilter, setTickerFilter] = React.useState([])
-    const [sectorFilter, setSectorFilter] = React.useState([])
-    const [industryFilter, setIndustryFilter] = React.useState([])
+    const [tickerFilter, setTickerFilter] = useRecoilState(tickerFilterState)
+    const [sectorFilter, setSectorFilter] = useRecoilState(sectorFilterState)
+    const [industryFilter, setIndustryFilter] = useRecoilState(industryFilterState)
 
     useEffect(() => {
         if (!fetching) {
@@ -38,9 +39,12 @@ const MentionsView = () => {
     }, [timeFilter]);
 
     const toggleShowFilter = () => {
-        setShowFilters(!showFilters)
+        const showFiltersValue = {
+            show: !showFilters.show,
+            label: showFilters.show ? "Show Filters" : "Hide Filters"
+        }
 
-        setFiltersLabel(showFilters ? "Show Filters" : "Hide Filters")
+        setShowFilters(showFiltersValue)
     }
 
     const getTickers = () => {
@@ -83,7 +87,6 @@ const MentionsView = () => {
 
     return (
         <Container maxWidth="md" className="mentionsChart">
-            <h1>WSB Mentions</h1>
             <Grid container spacing={3}>
                 <Grid item xs={2}>
                     <Autocomplete
@@ -102,19 +105,20 @@ const MentionsView = () => {
                 <Grid item xs={7}/>
                 <Grid item xs={3}>
                     <Button
-                        endIcon={<FilterListIcon>{filtersLabel}</FilterListIcon>}
+                        endIcon={<FilterListIcon>{showFilters.label}</FilterListIcon>}
                         onClick={toggleShowFilter}
                         className="showFilters"
-                    >{filtersLabel}</Button>
+                    >{showFilters.label}</Button>
                 </Grid>
             </Grid>
-            { showFilters ?
+            { showFilters.show ?
                 <div style={{paddingTop: '12px', paddingBottom: '12px'}}>
                     <Grid container spacing={3}>
                         <Grid item xs={4}>
                             <Autocomplete
                                 multiple
                                 limitTags={1}
+                                value={tickerFilter}
                                 options={getTickers()}
                                 id="tickers-filter"
                                 renderInput={(params) => <TextField {...params} label="Ticker" variant="outlined" />}
@@ -127,6 +131,7 @@ const MentionsView = () => {
                             <Autocomplete
                                 multiple
                                 limitTags={1}
+                                value={sectorFilter}
                                 options={getSectors()}
                                 id="sector-filter"
                                 renderInput={(params) => <TextField {...params} label="Sector" variant="outlined" />}
@@ -139,6 +144,7 @@ const MentionsView = () => {
                             <Autocomplete
                                 multiple
                                 limitTags={1}
+                                value={industryFilter}
                                 options={getIndustries()}
                                 id="industry-filter"
                                 renderInput={(params) => <TextField {...params} label="Industry" variant="outlined" />}
@@ -161,5 +167,38 @@ const MentionsView = () => {
         </Container>
     );
 }
+
+const tickerFilterState = atom({
+    key: 'tickerFilterState',
+    default: [],
+    effects_UNSTABLE: [persistAtom]
+});
+
+const sectorFilterState = atom({
+    key: 'sectorFilterState',
+    default: [],
+    effects_UNSTABLE: [persistAtom]
+});
+
+const industryFilterState = atom({
+    key: 'industryFilterState',
+    default: [],
+    effects_UNSTABLE: [persistAtom]
+});
+
+const timeFilterState = atom({
+    key: 'timeFilterState',
+    default: timeFilterValues[0],
+    effects_UNSTABLE: [persistAtom]
+});
+
+const showFiltersState = atom({
+    key: 'showFiltersState',
+    default: {
+        show: false,
+        label: "Show Filters"
+    },
+    effects_UNSTABLE: [persistAtom]
+});
 
 export default MentionsView

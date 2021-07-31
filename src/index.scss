@@ -40,8 +40,8 @@ code {
 }
 
 .barChartWrapper {
-  height: 700px;
-  overflow-y: scroll;
+  max-height: 700px;
+  overflow-y: auto;
 }
 
 .spinnerWrapper {
@@ -50,5 +50,16 @@ code {
   .loadingSpinner {
     margin: 0 auto;
     display: block;
+  }
+}
+
+header {
+  h1 {
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+
+  nav.sentimentBreadcrumbs {
+    margin-bottom: 20px;
   }
 }
