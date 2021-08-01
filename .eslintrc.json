@@ -1,12 +1,20 @@
 {
   "plugins": [
-    "react-hooks"
+    "react-hooks",
+    "prettier"
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
       "warn", {
         "additionalHooks": "useRecoilCallback|useRecoilTransaction_UNSTABLE"
+      }
+    ],
+    "prettier/prettier": [
+      "warn", {
+        "doubleQuote": true,
+        "semi": true,
+        "tabWidth": 4
       }
     ]
   }

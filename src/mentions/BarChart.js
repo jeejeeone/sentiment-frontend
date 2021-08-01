@@ -7,8 +7,8 @@ const barConfig = {
     barMinWidthPercentage: 0.3,
     // Approximation
     charWidth: 10,
-    markerLength: 5
-}
+    markerLength: 5,
+};
 
 const Bar = (props) => {
     const barSize = barConfig.height + barConfig.padding;
@@ -16,17 +16,17 @@ const Bar = (props) => {
     const textY = ((props.index + 1) * barSize) / 2 + (props.index * barSize) / 2;
     const markerY = textY - 1;
 
-    const percentage = (percentage) => percentage + "%"
+    const percentage = (percentage) => percentage + "%";
     const barY = props.index * barSize;
-    const barXWithPadding = props.maxTickerCharacters * barConfig.charWidth + barConfig.barPadding
+    const barXWithPadding = props.maxTickerCharacters * barConfig.charWidth + barConfig.barPadding;
     const barWidth =
         percentage(
         props.widthPercentage < barConfig.barMinWidthPercentage ?
             barConfig.barMinWidthPercentage : props.widthPercentage
-        )
+        );
 
-    const countY = textY
-    const countX = barXWithPadding + 5
+    const countY = textY;
+    const countX = barXWithPadding + 5;
 
     return (
         <g className="barItem">
@@ -45,7 +45,7 @@ const Bar = (props) => {
             </g>
         </g>
     );
-}
+};
 
 const BarChart = (props) => {
     const maxTickerCharacters = Math.max(...props.tickers.map(item => item.ticker.length));
@@ -78,7 +78,6 @@ const BarChart = (props) => {
             </svg>
         </div>
     );
-}
+};
 
-
-export default BarChart
+export default BarChart;

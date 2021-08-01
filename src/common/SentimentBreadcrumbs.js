@@ -1,15 +1,15 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
-import HomeIcon from '@material-ui/icons/Home';
-import { atom, useRecoilState } from 'recoil';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import HomeIcon from "@material-ui/icons/Home";
+import { atom, useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     link: {
-        display: 'flex',
+        display: "flex",
     },
     icon: {
         marginRight: theme.spacing(0.5),
@@ -21,23 +21,23 @@ const useStyles = makeStyles((theme) => ({
 // TODO: Maybe improve? Fairly messy, each view has to know full path
 
 export const root = {
-    label: 'Mentions',
-    path: '/'
-}
+    label: "Mentions",
+    path: "/"
+};
 
 export const breadcrumbsState = atom({
-    key: 'breadcrumbsState',
+    key: "breadcrumbsState",
     default: [root]
 });
 
 const SentimentBreadcrumbs = () => {
     const classes = useStyles();
-    const [breadcrumbs, setBreadcrumbs] = useRecoilState(breadcrumbsState)
+    const [breadcrumbs, setBreadcrumbs] = useRecoilState(breadcrumbsState);
     const history = useHistory();
 
     const goTo = (path) => {
         history.push(path);
-    }
+    };
 
     return (
         <Breadcrumbs aria-label="breadcrumb" className="sentimentBreadcrumbs">
@@ -51,7 +51,7 @@ const SentimentBreadcrumbs = () => {
                             className={classes.link}
                             key={item.path}
                         >
-                            {item.path == '/' ? <HomeIcon className={classes.icon} /> : null }
+                            {item.path == "/" ? <HomeIcon className={classes.icon} /> : null }
                             {item.label}
                         </Link>
                     } else {
@@ -66,7 +66,7 @@ const SentimentBreadcrumbs = () => {
                 })
             }
         </Breadcrumbs>
-    )
+    );
 }
 
 export default SentimentBreadcrumbs;

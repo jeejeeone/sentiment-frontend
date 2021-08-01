@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import axios from 'axios';
+import React, { useEffect } from "react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import axios from "axios";
 import BarChart from "./BarChart";
-import '../index.scss';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { atom, useRecoilState } from 'recoil';
+import "../index.scss";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { atom, useRecoilState } from "recoil";
 import { persistAtom } from "../common/persist";
 
-const timeFilterValues = ['24 hours', '7 days', '30 days', '100 days'];
+const timeFilterValues = ["24 hours", "7 days", "30 days", "100 days"];
 
 const MentionsView = () => {
-    const [timeFilter, setTimeFilter] = useRecoilState(timeFilterState)
-    const [showFilters, setShowFilters] = useRecoilState(showFiltersState)
-    const [mentionsView, setMentionsView] = React.useState([])
-    const [mentions, setMentions] = React.useState([])
-    const [fetching, setFetching] = React.useState(false)
-    const [tickerFilter, setTickerFilter] = useRecoilState(tickerFilterState)
-    const [sectorFilter, setSectorFilter] = useRecoilState(sectorFilterState)
-    const [industryFilter, setIndustryFilter] = useRecoilState(industryFilterState)
+    const [timeFilter, setTimeFilter] = useRecoilState(timeFilterState);
+    const [showFilters, setShowFilters] = useRecoilState(showFiltersState);
+    const [mentionsView, setMentionsView] = React.useState([]);
+    const [mentions, setMentions] = React.useState([]);
+    const [fetching, setFetching] = React.useState(false);
+    const [tickerFilter, setTickerFilter] = useRecoilState(tickerFilterState);
+    const [sectorFilter, setSectorFilter] = useRecoilState(sectorFilterState);
+    const [industryFilter, setIndustryFilter] = useRecoilState(industryFilterState);
 
     useEffect(() => {
         if (!fetching) {
@@ -34,7 +34,7 @@ const MentionsView = () => {
                     setMentionsView(getFilteredMentions(res.data.mentions, tickerFilter, sectorFilter, industryFilter))
                     setFetching(false)
                 }
-            )
+            );
         }
     }, [timeFilter]);
 
@@ -42,13 +42,13 @@ const MentionsView = () => {
         const showFiltersValue = {
             show: !showFilters.show,
             label: showFilters.show ? "Show Filters" : "Hide Filters"
-        }
+        };
 
-        setShowFilters(showFiltersValue)
+        setShowFilters(showFiltersValue);
     }
 
     const getTickers = () => {
-        return mentions.map(item => item.ticker)
+        return mentions.map(item => item.ticker);
     }
 
     const getSectors = () => {
@@ -60,18 +60,18 @@ const MentionsView = () => {
     }
 
     const filterByTicker = (tickers) => {
-        setTickerFilter(tickers)
-        setMentionsView(getFilteredMentions(mentions, tickers, sectorFilter, industryFilter))
+        setTickerFilter(tickers);
+        setMentionsView(getFilteredMentions(mentions, tickers, sectorFilter, industryFilter));
     }
 
     const filterBySectors = (sectors) => {
-        setSectorFilter(sectors)
-        setMentionsView(getFilteredMentions(mentions, tickerFilter, sectors, industryFilter))
+        setSectorFilter(sectors);
+        setMentionsView(getFilteredMentions(mentions, tickerFilter, sectors, industryFilter));
     }
 
     const filterByIndustries = (industries) => {
-        setIndustryFilter(industries)
-        setMentionsView(getFilteredMentions(mentions, tickerFilter, sectorFilter, industries))
+        setIndustryFilter(industries);
+        setMentionsView(getFilteredMentions(mentions, tickerFilter, sectorFilter, industries));
     }
 
     const getFilteredMentions = (mentionsArray, tickerFilter, sectorFilter, industryFilter) => {
@@ -112,7 +112,7 @@ const MentionsView = () => {
                 </Grid>
             </Grid>
             { showFilters.show ?
-                <div style={{paddingTop: '12px', paddingBottom: '12px'}}>
+                <div style={{paddingTop: "12px", paddingBottom: "12px"}}>
                     <Grid container spacing={3}>
                         <Grid item xs={4}>
                             <Autocomplete
@@ -169,31 +169,31 @@ const MentionsView = () => {
 }
 
 const tickerFilterState = atom({
-    key: 'tickerFilterState',
+    key: "tickerFilterState",
     default: [],
     effects_UNSTABLE: [persistAtom]
 });
 
 const sectorFilterState = atom({
-    key: 'sectorFilterState',
+    key: "sectorFilterState",
     default: [],
     effects_UNSTABLE: [persistAtom]
 });
 
 const industryFilterState = atom({
-    key: 'industryFilterState',
+    key: "industryFilterState",
     default: [],
     effects_UNSTABLE: [persistAtom]
 });
 
 const timeFilterState = atom({
-    key: 'timeFilterState',
+    key: "timeFilterState",
     default: timeFilterValues[0],
     effects_UNSTABLE: [persistAtom]
 });
 
 const showFiltersState = atom({
-    key: 'showFiltersState',
+    key: "showFiltersState",
     default: {
         show: false,
         label: "Show Filters"
