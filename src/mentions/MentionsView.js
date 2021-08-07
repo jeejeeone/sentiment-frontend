@@ -156,7 +156,7 @@ const MentionsView = () => {
                     </Grid>
                 </div> : null
             }
-            <Grid container spacing={3}>
+            <Grid container spacing={3} className="mentionsContainer">
                 <Grid item xs={12}>
                     { fetching ?
                         <div className="spinnerWrapper"><CircularProgress className="loadingSpinner" /></div> :

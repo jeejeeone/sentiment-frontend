@@ -14,6 +14,10 @@ code {
   .showFilters {
     float: right;
   }
+
+  .mentionsContainer {
+    padding-top: 10px;
+  }
 }
 
 .barItem {
@@ -63,3 +67,10 @@ header {
     margin-bottom: 20px;
   }
 }
+
+.tickerViewContainer {
+  h2 {
+    margin-bottom: 0;
+  }
+}
+

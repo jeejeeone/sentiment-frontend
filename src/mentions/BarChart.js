@@ -41,7 +41,7 @@ const Bar = (props) => {
                     x={barXWithPadding}
                     onClick={() => props.onClick(props.text)}
                 />
-                <text className="count" y={countY} x={countX} dy=".35em">{props.count}</text>
+                <text className="count" y={countY} x={countX} dy=".35em" onClick={() => props.onClick(props.text)}>{props.count}</text>
             </g>
         </g>
     );

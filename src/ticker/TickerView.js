@@ -5,17 +5,11 @@ import { useParams } from "react-router-dom";
 import { ResponsiveLine } from "@nivo/line";
 import { useRecoilState } from "recoil";
 import { breadcrumbsState, root } from "../common/SentimentBreadcrumbs";
+import Divider from '@material-ui/core/Divider';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
-const data1 = [
-    {
-        id: "hours",
-        data: [
-            { y: "123", x: "2019-05-29" },
-            { y: "123", x: "2019-05-30" },
-            { y: "12", x: "2019-05-31" },
-        ],
-    },
-];
+const data2 = [{"id":"GME","data":[{"y":43,"x":"2021-08-04"},{"y":181,"x":"2021-08-03"}]}]
 
 const TickerView = () => {
     const [data, setData] = React.useState([]);
@@ -29,15 +23,17 @@ const TickerView = () => {
             (res) => {
                 const data = [{
                     id: res.data.ticker,
-                    data: res.data.tickerMentions.map(item => {
+                    data: res.data.tickerMentions.reverse().map(item => {
                         return {
                             y: item.count,
-                            x: item.date + " 00:00"
+                            x: item.date,
                         }
                     })
                 }];
 
-                console.log(data);
+                console.log(JSON.stringify(data))
+
+                setData(data)
             })
 
         setBreadcrumbs([
@@ -51,26 +47,25 @@ const TickerView = () => {
 
     return (
         <Container maxWidth="md" className="tickerViewContainer">
-            aa
+            <h2><TimelineIcon />{params.ticker}</h2>
             <div className="App" style={{ height: 400 }}>
-
                 <ResponsiveLine
-                    data={data1}
+                    data={data}
                     margin={{ top: 40, right: 150, bottom: 50, left: 40, }}
-                    yScale={{ type: "point", }}
+                    yScale={{ type: 'linear', }}
                     xScale={{
                         type: "time",
                         format: "%Y-%m-%d",
-                        precision: "day",
+                        useUTC: false,
+                        precision: 'day',
                     }}
                     xFormat="time:%Y-%m-%d"
                     axisBottom={{
                         tickRotation: 44,
-                        format: "%Y-%m-%d",
-                        legendPosition: "middle",
-                        tickValues: "every day",
+                        format: '%b %d',
+                        tickValues: 'every week',
                     }}
-                    pointSize={10}
+                    pointSize={0}
                     pointColor="white"
                     pointBorderWidth={2}
                     pointBorderColor={{ from: "serieColor", }}
